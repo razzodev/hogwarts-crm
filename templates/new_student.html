@@ -1,0 +1,7 @@
+{%extends 'layout.html' %} {% block body %}
+<form action="/new_student/add" method="post">
+  <input type="text" name="first_name" />
+  <input type="text" name="last_name" />
+  <input type="submit" value="add" />
+</form>
+{% endblock %}
