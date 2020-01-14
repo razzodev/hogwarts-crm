@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect
-
-students = []
+import time
+from data.data import students
 
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ def index():
 
 
 @app.route('/students')
-def students():
+def getstudents():
     return render_template('students.html', students=students)
 
 
@@ -22,10 +22,14 @@ def new_student():
 
 @app.route('/new_student/add', methods=["POST"])
 def add_student():
-    print('students>>>>>>>>>', students)
-    first_name = request.form.get('first_name')
-    last_name = request.form.get('list_name')
-    return str(students)
+    student = {}
+    student['first_name'] = request.form.get('first_name')
+    student['last_name'] = request.form.get('last_name')
+    student['time_created'] = time.time()
+    student['time_updated'] = time.time()
+    students.append(student)
+    print('add_student():', students)
+    return redirect('http://127.0.0.1:5000/students')
 
 
 if __name__ == "__main__":
