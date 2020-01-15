@@ -1,7 +1,71 @@
 {%extends 'layout.html' %} {% block body %}
+<style>
+div {
+  text
+}
+</style>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"
+></script>
+
 <form action="/new_student/add" method="post">
   <input type="text" name="first_name" placeholder="First Name" />
   <input type="text" name="last_name" placeholder="Last Name" />
+  <br />
+  <br />
+  <div id="coursesWrapper" style="display: inline;">
+    <label for="courses" style="font-weight: 700;">Courses:</label>
+    <br />
+  </div>
+    <!-- <div></div> -->
+    <div id="skillsWrapper" style="display: block;">
+      <br />
+      <label for="skills" style="font-weight: 700;">Skills:</label>
+      <br />
+    </div>
+  </div>
   <input type="submit" value="add" />
 </form>
+
+<script>
+  let courseList = {{ courses | tojson }};
+  let skillList = {{ skills | tojson }};
+  function removeSpaces(str) {
+    return str.replace(/\s+/g, '');
+  };
+
+  $(document).ready(function() {
+    courseList.forEach((course, i) => {
+      $('<input/>').attr({ type: 'checkbox', id: `checkbox_${removeSpaces(course)}`, name: removeSpaces(course),}).appendTo('#coursesWrapper');
+      $('<label/>').text(course).appendTo('#coursesWrapper');
+      $('<br/>').appendTo('#coursesWrapper');
+    });
+    skillList.forEach(skill => {
+      $('<label/>').text(skill).appendTo('#skillsWrapper');
+      $('<input/>').attr({ type: 'checkbox', id: `checkbox_${removeSpaces(skill)}`,}).appendTo('#skillsWrapper');
+      $('<input/>').attr({ type: 'range', id: `range_${removeSpaces(skill)}`, name: removeSpaces(skill),disabled:true, min:1, max:5,step:1, }).css('display', 'none').appendTo('#skillsWrapper');
+      $('<label/>').attr({id:`skillValue_${removeSpaces(skill)}`,}).text($(`#range_${removeSpaces(skill)}`).val()).appendTo(`#skillsWrapper`).css('display','none ');
+      
+      $(`#range_${removeSpaces(skill)}`).on('mouseup', function() {
+        let rangeToLabel = this.id.replace('range_','skillValue_');
+        $(`#${rangeToLabel}`).text($(`#range_${removeSpaces(skill)}`).val());
+        });
+      $('<br/>').appendTo('#skillsWrapper');
+      $(`#checkbox_${removeSpaces(skill)}`).on('click', function(e) {
+        let checkboxToRange = (this.id).replace('checkbox_','range_');
+        let rangeToLabel = checkboxToRange.replace('range_','skillValue_');
+        if ($(this).prop('checked')) {
+          $(`#${checkboxToRange}`).attr({disabled: false}).css('display', 'inline');
+          $(`#${rangeToLabel}`).css('display', 'inline');         
+        } else {
+          $(`#${checkboxToRange}`).attr({disabled: true}).css('display', 'none');
+          $(`#${rangeToLabel}`).css('display', 'none');          
+        }
+      });
+    });
+  });
+</script>
+
 {% endblock %}
