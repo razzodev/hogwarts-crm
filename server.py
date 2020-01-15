@@ -31,20 +31,26 @@ def add_student():
     student['time_created'] = time.time()
     student['time_updated'] = time.time()
     student['id'] = f"ID:{student['first_name']}{int(time.time())}"
+    student['courses'] = []
+    student['skills'] = {}
     for course in courses_db:
-        student[course] = request.form.get(course.replace(" ", ""))
+        # print('>>>>>>>>>>>>>>>', request.form.get(course.replace(" ", "")))
+        if request.form.get(course.replace(" ", "")):
+            student['courses'].append(course)
     for skill in skills_db:
-        student[skill] = request.form.get(skill.replace(" ", ""))
+        if request.form.get(skill.replace(" ", "")):
+            student['skills'][skill] = request.form.get(skill.replace(" ", ""))
     students.append(student)
     print('add_student():', student)
-    return redirect('http://127.0.0.1:5000/students')
+    render_template('students.html', student=student)
+    return redirect('/students')
 
 
 @app.route('/student_profile/<id>')
 def get_student_profile(id):
     for student in students:
         if student['id'] == id:
-            return render_template('student_profile.html', student=student)
+            return render_template('student_profile.html', student=student, courses=student['courses'])
 
 
 if __name__ == "__main__":
