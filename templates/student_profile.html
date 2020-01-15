@@ -1,8 +1,36 @@
 {%extends 'layout.html' %} {% block body %}
 <h1>{{student.first_name}} {{student.last_name}}</h1>
-<h3>Courses:</h3>
-<p>
-  {% for course in student.courses %} {{course}} {% endfor %}
-</p>
+
+<table>
+  <tr>
+    <td class="table-header">Courses:</td>
+  </tr>
+  {% for course in student.courses %}
+  <tr>
+    <td>
+      {{course}}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br />
+<br />
+<table>
+  <tr>
+    <td class="table-header">Skill</td>
+    <td class="table-header">Level</td>
+  </tr>
+  {% for skill in student.skills.items() %}
+  <tr>
+    <td>
+      {{skill[0]}}
+    </td>
+    <td>
+      {{skill[1]}}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
 {% endblock %}
