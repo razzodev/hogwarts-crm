@@ -1,5 +1,10 @@
 {%extends 'layout.html' %} {% block body %}
-<h1>{{student.first_name}} {{student.last_name}}</h1>
+<h3>
+  {{student.first_name}} {{student.last_name}}
+  <span>
+    <a href="{{'/student_profile/delete/%s'%student.id}}">delete</a>
+  </span>
+</h3>
 
 <table>
   <tr>
