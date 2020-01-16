@@ -1,9 +1,13 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, jsonify
 import time
 import json
+import pickle
 from data.student_data import students
 from data.school_db import courses_db, skills_db
 app = Flask(__name__)
+
+with open('./data/students_db.json') as file:
+    students = json.load(file)
 
 
 @app.route('/')
@@ -39,7 +43,8 @@ def add_student():
             student['courses'].append(course)
     for skill in skills_db:
         if request.form.get(skill.replace(" ", "")):
-            student['skills'][skill] = request.form.get(skill.replace(" ", ""))
+            student['skills'][skill] = int(
+                request.form.get(skill.replace(" ", "")))
     students.append(student)
     print('add_student():', student)
     render_template('students.html', student=student)
@@ -51,6 +56,13 @@ def get_student_profile(id):
     for student in students:
         if student['id'] == id:
             return render_template('student_profile.html', student=student, courses=student['courses'])
+
+
+@app.route('/students/save_DB')
+def save_students_to_db():
+    with open('./data/students_db.json', 'w') as file:
+        json.dump(students, file)
+    return str('check students_db.json')
 
 
 if __name__ == "__main__":
