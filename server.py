@@ -58,6 +58,12 @@ def get_student_profile(id):
             return render_template('student_profile.html', student=student, courses=student['courses'])
 
 
+@app.route('/student_profile/delete/<id>')
+def del_student_profile(id):
+    students[:] = [student for student in students if student['id'] != id]
+    return redirect('/students')
+
+
 @app.route('/students/save_DB')
 def save_students_to_db():
     with open('./data/students_db.json', 'w') as file:
