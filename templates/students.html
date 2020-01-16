@@ -1,5 +1,12 @@
 {%extends 'layout.html' %} {% block body %}
-<h3>Student List</h3>
+<h3>
+  Student List
+  <input
+    type="button"
+    onclick="location.href='/students/save_DB'"
+    value="Save Student Data"
+  />
+</h3>
 <table>
   <tr
     style="font-size: 20px; font-weight: 100; background-color: rgba(0, 20, 100, 0.1)"
