@@ -1,15 +1,4 @@
 {%extends 'layout.html' %} {% block body %}
-<style>
-div {
-  
-}
-</style>
-<script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"
-></script>
-
 <form action="/new_student/add" method="post">
   <input type="text" name="first_name" placeholder="First Name" />
   <input type="text" name="last_name" placeholder="Last Name" />
@@ -28,7 +17,11 @@ div {
   </div>
   <input type="submit" value="add" />
 </form>
-
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"
+></script>
 <script>
   let courseList = {{ courses | tojson }};
   let skillList = {{ skills | tojson }};
