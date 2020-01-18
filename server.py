@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, jsonify
 import time
+from datetime import datetime
 import json
 import pickle
 from data.student_data import students
@@ -55,7 +56,7 @@ def add_student():
 def get_student_profile(id):
     for student in students:
         if student['id'] == id:
-            return render_template('student_profile.html', student=student, courses=student['courses'])
+            return render_template('student_profile.html', student=student, time_param=datetime.fromtimestamp(student['time_created']))
 
 
 @app.route('/student_profile/delete/<id>')
