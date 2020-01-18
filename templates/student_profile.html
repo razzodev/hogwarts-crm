@@ -1,41 +1,47 @@
 {%extends 'layout.html' %} {% block body %}
-<h3>
-  {{student.first_name}} {{student.last_name}}
-  <span>
-    <a href="{{'/student_profile/delete/%s'%student.id}}">delete</a>
-  </span>
+<h3 style="margin-bottom:5px">
+  Name: {{student.first_name}} {{student.last_name}}
 </h3>
+<span>
+  <a href="{{'/student_profile/delete/%s'%student.id}}">delete</a>
+</span>
 
-<table>
-  <tr>
-    <td class="table-header">Courses:</td>
-  </tr>
-  {% for course in student.courses %}
-  <tr>
-    <td>
-      {{course}}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+<h5>
+  Time Created: {{ time_param }}
+</h5>
 
-<br />
-<br />
-<table>
-  <tr>
-    <td class="table-header">Skill</td>
-    <td class="table-header">Level</td>
-  </tr>
-  {% for skill in student.skills.items() %}
-  <tr>
-    <td>
-      {{skill[0]}}
-    </td>
-    <td>
-      {{skill[1]}}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-
+<div style="display: flex;">
+  <div style="display: inline;">
+    <table>
+      <tr>
+        <td class="table-header">Skills</td>
+        <td class="table-header">lvl.</td>
+      </tr>
+      {% for skill in student.skills.items() %}
+      <tr>
+        <td>
+          {{skill[0]}}
+        </td>
+        <td>
+          {{skill[1]}}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div style="display: inline;">
+    <table>
+      <tr>
+        <td class="table-header">Courses:</td>
+      </tr>
+      {% for course in student.courses %}
+      <tr>
+        <td>
+          {{course}}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
 {% endblock %}
