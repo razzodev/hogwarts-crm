@@ -7,21 +7,27 @@
     <title>Hogwarts Web</title>
     <style>
       .table-header {
-        padding-right: 40px;
+        padding-right: 10px;
         font-size: 20px;
         font-weight: 100;
         background-color: rgba(0, 20, 100, 0.1);
       }
+      .nav-item {
+        text-decoration: none;
+        float: left;
+      }
+
+      .nav-item > a {
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
-    <h1>Hogwarts CRM</h1>
-    <nav>
-      <ul>
-        <li><a href="/students">Students</a></li>
-        <li><a href="/new_student">New Student</a></li>
-      </ul>
-    </nav>
+    <h2 style="display: inline;">Hogwarts CRM</h2>
+
+    <a href="/students">Students</a>
+    <a href="/new_student">New Student</a>
+
     <br />
     {% block body %}{% endblock %}
   </body>
